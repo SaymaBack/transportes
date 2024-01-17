@@ -6,4 +6,5 @@ use App\Models\Usuario;
 interface Authentication
 {
     public function authenticate(array $data): array;
+    
 }

@@ -9,4 +9,4 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [Login::class, 'auth'])->middleware('authV');
+Route::post('/', [Login::class, 'auth']);
