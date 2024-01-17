@@ -7,33 +7,32 @@ use App\Models\Usuario;
 
 class ValidationUser implements Validation
 {
-    public function validateDataGeneral(array $data){
-        
-    }
 
-    public function validateUsername(string $usuario): array
+
+    public function validateExistUsername(array $data): array
     {
-        if (empty($usuario)) {
-            return ["success" => false, "message" => "El usuario es requerido"];
-        }
-        if (strlen($usuario) < 40) {
+        if (!$data["usuario"]) {
             return ["success" => false, "message" => "El usuario es requerido"];
         }
 
+        if (!array_key_exists('usuario', $data)) {
+            return ["success" => false, "message" => "El usuario es requerido"];
+        }
         return ["success" => true];
     }
 
 
-    public function validatePassword(string $password): array
+    /////////////////////////////////////////////////////////////////////////////
+
+
+
+    public function validateExistPassword(array $data): array
     {
-
-
-        if (empty($password)) {
+        if (!$data["password"]) {
             return ["success" => false, "message" => "El password es requerido"];
         }
 
-        // Comprueba que la contraseña tiene al menos 8 caracteres
-        if (strlen($password) < 50) {
+        if (!array_key_exists('password', $data)) {
             return ["success" => false, "message" => "El password es requerido"];
         }
         return ["success" => true];

@@ -9,4 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('/auth')->group(__DIR__ . '/Login/api.php');
+Route::prefix('/v1/login')->group(__DIR__ . '/login/api.php');
+
+Route::prefix('/v1/prueba')->group(__DIR__ . '/prueba/api.php')->withoutMiddleware("throttle:api")->middleware("throttle:240:1");
