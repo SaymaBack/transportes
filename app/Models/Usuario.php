@@ -18,6 +18,10 @@ class Usuario extends Authenticatable
             'password',
             'eliminado',
     ];
+
+    protected $hidden = [
+        'password'
+    ];
     public $timestamps = false;
-    
+
 }

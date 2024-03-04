@@ -4,7 +4,7 @@ namespace App\Http\Implementation;
 
 use App\Http\interfaces\Authentication;
 use App\Http\interfaces\Validation;
-use App\Models\Usuario;
+use App\Models\User;
 
 class UserAuth implements Authentication
 {
@@ -16,7 +16,7 @@ class UserAuth implements Authentication
     {
         // Comprueba si el usuario existe
         try {
-            $user = Usuario::select("*")->where("usuario", $datauser["usuario"])->where("eliminado", 0)->first();
+            $user = User::where("username", $datauser["usuario"])->where("eliminado", 0)->first();
         } catch (\Throwable $th) {
             return ["success" => false, "message" => "ocurrio un problema, intenta más tarde FAUT-GU-TC", "status" => 409];
         }
@@ -24,8 +24,7 @@ class UserAuth implements Authentication
         if ($user == null) {
             return ["success" => false, "message" => "Usuario invalido", 404];
         }
-
-
+        
         if (!password_verify($datauser["password"], $user->password)) {
             return ["success" => false, "message" => "Contraseña invalida", 404];
         }

@@ -39,7 +39,7 @@ class UserAuthjwt implements JWT
         $request->headers->set('Accept', '*/*');
         $request->headers->set('Content-Type', '*/*');
 
-      
+
 
         if ($responsetoken["success"]) {
 
@@ -55,7 +55,7 @@ class UserAuthjwt implements JWT
             ));
 
 
-        
+
 
             return ['success' => true, 'message' => 'Token valido', 'data' => $dataresponse[0], 'status' => 200];
         }
