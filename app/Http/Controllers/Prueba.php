@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class Prueba extends Controller
 {
@@ -14,8 +16,9 @@ class Prueba extends Controller
     }
 
 
-    public function show(Request $request,$id)
+    public function show(Request $request,User $user)
     {
+        
     }
 
 

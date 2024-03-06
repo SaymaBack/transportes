@@ -11,6 +11,31 @@ use Illuminate\Http\Request;
 
 class Login extends Controller
 {
+    /**
+    * @OA\Post(
+    *     path="/api/v1/login",
+    *     summary="Autenticacion y generacion de token JWT",
+    *     @OA\RequestBody(
+    *       @OA\MediaType(
+    *           mediaType="application/json",
+    *           @OA\Schema(
+    *               @OA\Property(
+    *                   property="usuario",
+    *                   type="string"
+    *               ),
+    *               @OA\Property(
+    *                   property="password",
+    *                   type="string"
+    *               ),
+    *               example={"usuario": "test", "password": "123456"}
+    *           )
+    *       )
+    *     ),
+    *     @OA\Response(response="200", description="Login successful"),
+    *     @OA\Response(response="401", description="Invalid credentials"),
+    *     @OA\Response(response="409", description="Error; Bad request")
+    * )
+    */
     public function Auth(Request $request): JsonResponse
     {
         $data = $request->all();
