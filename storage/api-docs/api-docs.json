@@ -7,6 +7,9 @@
     "paths": {
         "/api/v1/login": {
             "post": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Autenticacion y generacion de token JWT",
                 "operationId": "88b020902ef75b44f7f15f7f66a98252",
                 "requestBody": {
@@ -24,7 +27,7 @@
                                 "type": "object",
                                 "example": {
                                     "usuario": "test",
-                                    "password": "12345678"
+                                    "password": "123456"
                                 }
                             }
                         }

@@ -15,6 +15,7 @@ class Login extends Controller
     * @OA\Post(
     *     path="/api/v1/login",
     *     summary="Autenticacion y generacion de token JWT",
+    *     tags={"Auth"},
     *     @OA\RequestBody(
     *       @OA\MediaType(
     *           mediaType="application/json",
