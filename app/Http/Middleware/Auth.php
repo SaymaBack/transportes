@@ -28,7 +28,6 @@ class Auth
             "id_usuario" => $responsetoken["data"]["id_usuario"]
         ]);
 
-
         return $next($request);
     }
 }
