@@ -7,3 +7,5 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('clientes', ClienteController::class);
 
 Route::get('tipos', [ClienteController::class, 'tiposClientes']);
+
+Route::patch('estatus/{cliente}', [ClienteController::class, 'cambiaEstatusCliente']);

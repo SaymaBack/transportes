@@ -146,4 +146,19 @@ class ClienteController extends Controller
         return response()->json($response['json'], $response['code']);
     }
 
+    public function cambiaEstatusCliente(Cliente $cliente){
+        $response = ['json' => ['success' => false, 'message'=> 'Error, no se actualizó el estatus del cliente'], 'code' => 409];
+
+        $estatusCliente = $cliente->estatus ? false : true;
+        $res = $cliente->update(['estatus' => $estatusCliente]);
+
+        if ($res) {
+            $response['json']['success'] = true;
+            $response['json']['message'] = 'Estatus de cliente actualizado correctamente.';
+            $response['code'] = 200;
+        }
+
+        return response()->json($response['json'], $response['code']);
+    }
+
 }
