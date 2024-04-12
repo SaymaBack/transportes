@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'password' => bcrypt('123456.')
         ]);
+
+
     }
 }
