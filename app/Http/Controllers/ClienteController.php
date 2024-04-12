@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\Auth;
 use App\Models\Cliente;
 use App\Models\TipoCliente;
 use Illuminate\Http\Request;
@@ -48,9 +47,9 @@ class ClienteController extends Controller
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se pudo almacenar el cliente'], 'code' => 409];
 
         $validation = Validator::make($request->all(), [
-            'nombre' => 'required|string',
+            'nombre' => 'required|unique:clientes|string',
             'direccion' => 'required|string',
-            'rfc' => 'required|string',
+            'rfc' => 'required|unique:clientes|string',
             'email' => 'required|email',
             'telefono' => 'required|string',
             'codigo_postal' => 'required|string',
@@ -86,9 +85,9 @@ class ClienteController extends Controller
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se pudo actualizar cliente'], 'code' => 409];
 
         $validation = Validator::make($request->all(), [
-            'nombre' => 'required|string',
+            'nombre' => 'required|unique:clientes|string',
             'direccion' => 'required|string',
-            'rfc' => 'required|string',
+            'rfc' => 'required|unique:clientes|string',
             'email' => 'required|email',
             'telefono' => 'required|string',
             'codigo_postal' => 'required|string',
@@ -97,7 +96,7 @@ class ClienteController extends Controller
             'plazo' => 'required|numeric',
             'regimen_fiscal' => 'required|exists:App\Models\RegimenFiscal,c_RegimenFiscal',
             'contacto_administrativo' => 'required|string',
-            'contacto_operativo' => 'string',
+            'contacto_operativo' => 'nullable|string',
             'tipo_cliente_id' => 'required|exists:App\Models\TipoCliente,id',
             'forma_pago' => 'required|exists:App\Models\FormaPago,c_FormaPago',
             'uso_cfdi' => 'required|exists:App\Models\UsoCFDI,c_UsoCFDI',
