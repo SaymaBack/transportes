@@ -6,6 +6,7 @@ use App\Models\FormaPago;
 use App\Models\RegimenFiscal;
 use App\Models\TipoCliente;
 use App\Models\UsoCFDI;
+use Faker\Core\Uuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,9 +22,9 @@ class ClienteFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->company(),
+            'razon_social' => fake()->company(),
             'direccion' => fake()->address(),
-            'rfc' => fake()->companySuffix(),
+            'rfc' => fake()->uuid(),
             'email' => fake()->companyEmail(),
             'telefono' => fake()->phoneNumber(),
             'codigo_postal' => fake()->postcode(),

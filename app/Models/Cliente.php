@@ -13,7 +13,7 @@ class Cliente extends Model
     use HasFactory, SoftDeletes, Notifiable;
 
     protected $fillable = [
-        'nombre',
+        'razon_social',
         'direccion',
         'rfc',
         'email',
@@ -45,6 +45,10 @@ class Cliente extends Model
 
     public function formaPago(){
         return $this->hasOne(RegimenFiscal::class, 'c_RegimenFiscal', 'regimen_fiscal');
+    }
+
+    public function documentos(){
+        return $this->hasMany(ClienteDocumento::class, 'cliente_id', 'id');
     }
 
 }

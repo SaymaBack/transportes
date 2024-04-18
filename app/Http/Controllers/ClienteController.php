@@ -6,13 +6,14 @@ use App\Models\Cliente;
 use App\Models\TipoCliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ClienteController extends Controller
 {
     public function index(){
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se obtuvieron clientes'], 'code' => 409];
 
-        $clientes = Cliente::select('clientes.id', 'clientes.nombre', 'clientes.rfc', 'clientes.email', 'tc.nombre as tipo_cliente', 'clientes.estatus')
+        $clientes = Cliente::select('clientes.id', 'clientes.razon_social', 'clientes.rfc', 'clientes.email', 'tc.nombre as tipo_cliente', 'clientes.estatus')
                 ->join('tipo_cliente as tc', 'clientes.tipo_cliente_id', '=', 'tc.id')
                 ->orderBy('id', 'desc')
                 ->get();
@@ -46,8 +47,8 @@ class ClienteController extends Controller
     public function store(Request $request){
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se pudo almacenar el cliente'], 'code' => 409];
 
-        $validation = Validator::make($request->all(), [
-            'nombre' => 'required|unique:clientes|string',
+        $validator = Validator::make($request->all(), [
+            'razon_social' => 'required|unique:clientes|string',
             'direccion' => 'required|string',
             'rfc' => 'required|unique:clientes|string',
             'email' => 'required|email',
@@ -65,10 +66,10 @@ class ClienteController extends Controller
             'estatus' => 'required|boolean'
         ]);
 
-        if ($validation->fails()) {
-            $response['json']['errors'] = $validation->errors()->toArray();
+        if ($validator->fails()) {
+            $response['json']['errors'] = $validator->errors()->toArray();
         } else {
-            $cliente = Cliente::create($validation->validated());
+            $cliente = Cliente::create($validator->validated());
 
             if (isset($cliente)) {
                 $response['json']['data'] = $cliente;
@@ -84,10 +85,10 @@ class ClienteController extends Controller
     public function update(Cliente $cliente,Request $request){
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se pudo actualizar cliente'], 'code' => 409];
 
-        $validation = Validator::make($request->all(), [
-            'nombre' => 'required|unique:clientes|string',
+        $validator = Validator::make($request->all(), [
+            'razon_social' => ['required',Rule::unique('clientes')->ignore($cliente->id),'string'],
             'direccion' => 'required|string',
-            'rfc' => 'required|unique:clientes|string',
+            'rfc' => ['required',Rule::unique('clientes')->ignore($cliente->id),'string'],
             'email' => 'required|email',
             'telefono' => 'required|string',
             'codigo_postal' => 'required|string',
@@ -103,10 +104,10 @@ class ClienteController extends Controller
             'estatus' => 'required|boolean'
         ]);
 
-        if ($validation->fails()) {
-            $response['json']['errors'] = $validation->errors()->toArray();
+        if ($validator->fails()) {
+            $response['json']['errors'] = $validator->errors()->toArray();
         } else {
-            $cliente->update($validation->validated());
+            $cliente->update($validator->validated());
 
             if (isset($cliente)) {
                 $response['json']['data'] = $cliente;

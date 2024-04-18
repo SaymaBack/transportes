@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456.')
         ]);
 
+        $this->call([
+            TiposClientesSeeder::class,
+            ClientesSeeder::class,
+            CatDocumentosSeeder::class
+        ]);
+
 
     }
 }

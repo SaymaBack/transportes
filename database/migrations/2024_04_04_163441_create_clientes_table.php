@@ -19,7 +19,7 @@ return new class extends Migration
 
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('razon_social');
             $table->longText('direccion');
             $table->string('rfc');
             $table->string('email');
