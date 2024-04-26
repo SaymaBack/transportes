@@ -15,7 +15,6 @@ class ClienteDocumento extends Model
         'cliente_id',
         'documento_id',
         'path',
-        'file_name',
         'expiracion',
         'excluir'
     ];

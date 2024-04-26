@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->foreignId('documento_id')->constrained('cat_documentos');
             $table->string('path')->nullable();
-            $table->string('file_name')->nullable();
             $table->dateTime('expiracion')->nullable();
             $table->boolean('excluir');
             $table->softDeletes();

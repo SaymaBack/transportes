@@ -12,17 +12,35 @@ class CatDocumentoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se obtuvo catalogo de documentos'], 'code' => 409];
 
-        $catDocs = CatDocumento::all();
+        $validator = Validator::make($request->all(),[
+            'tipo_cliente' => 'nullable|exists:tipo_cliente,id',
+            'cliente' => 'nullable|exists:clientes,id'
+        ]);
 
-        if ($catDocs) {
-            $response['json']['data'] = $catDocs;
-            $response['json']['success'] = true;
-            $response['json']['message'] = 'Catalogo de Documentos obtenido correctamente.';
-            $response['code'] = 200;
+        if ($validator->fails()) {
+            $response['json']['errors'] = $validator->errors()->toArray();
+        } else{
+            $validated = $validator->validated();
+            $catDocs = CatDocumento::all();
+
+            if (isset($validated['tipo_cliente'])) {
+                foreach ($catDocs as $key => $value) {
+                    if (!in_array($validated['tipo_cliente'], $value->tipos_clientes)) {
+                        unset($catDocs[$key]);
+                    }
+                }
+            }
+
+            if ($catDocs) {
+                $response['json']['data'] = $catDocs;
+                $response['json']['success'] = true;
+                $response['json']['message'] = 'Catalogo de Documentos obtenido correctamente.';
+                $response['code'] = 200;
+            }
         }
 
         return response()->json($response['json'], $response['code']);
@@ -40,7 +58,7 @@ class CatDocumentoController extends Controller
             'require_token' => 'required|boolean',
             'active' => 'required|boolean',
             'tipos_clientes' => 'required|array|min:1',
-            'tipos_clientes.*' => 'required|number|distinct|exists:tipo_cliente,id'
+            'tipos_clientes.*' => 'required|numeric|distinct|exists:tipo_cliente,id'
         ]);
 
         if ($validator->fails()) {
@@ -116,8 +134,9 @@ class CatDocumentoController extends Controller
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error, no se eliminó documento del catalogo'], 'code' => 409];
 
-        if ($catDocumento) {
-            $response['json']['data'] = $catDocumento;
+        $del = $catDocumento->delete();
+
+        if ($del) {
             $response['json']['success'] = true;
             $response['json']['message'] = 'Documento del catalogo eliminado correctamente.';
             $response['code'] = 200;
