@@ -206,17 +206,18 @@ class ClienteDocumentoController extends Controller
 
         if (in_array($extension, $filesformat)) {
             $doc = storage_path("app/" . $file) . "[0]";
-            $fileName = 'app/documentos/thumbs/' . $name;
+            $fileName = storage_path('app/documentos/thumbs/' . $name);
             $image = new Imagick($doc);
             $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
             $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+            $image->minifyImage();
             $image->setImageFormat('jpg');
-            $image->writeImage(storage_path($fileName));
+            $image->writeImage($fileName);
 
-            $this->compressImage(storage_path($fileName), storage_path($fileName), 65);
+            $this->compressImage($fileName, $fileName, 100);
         }
 
-        return storage_path($fileName);
+        return $fileName;
     }
 
     private function compressImage($source, $destination, $quality)
@@ -239,11 +240,13 @@ class ClienteDocumentoController extends Controller
     }
 
     private function getThumbImg($path){
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
         $thumb = explode("/", $path);
-        $thumb = "app/documentos/thumbs/" . end($thumb);
+        $thumb_name = str_replace($extension, "jpg", end($thumb));
+        $thumb = storage_path("app/documentos/thumbs/" . $thumb_name);
 
-        if (file_exists(storage_path($thumb))) {
-            $thumb = "data:image/jpeg;base64," . base64_encode(file_get_contents(storage_path($thumb)));
+        if (file_exists($thumb)) {
+            $thumb = asset("storage/thumbs/" . $thumb_name);
         } else{
             $thumb = null;
         }
