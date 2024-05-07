@@ -107,7 +107,7 @@ class CatDocumentoController extends Controller
             'require_token' => 'required|boolean',
             'active' => 'required|boolean',
             'tipos_clientes' => 'required|array|min:1',
-            'tipos_clientes.*' => 'required|number|distinct|exists:tipo_cliente,id'
+            'tipos_clientes.*' => 'required|numeric|distinct|exists:tipo_cliente,id'
         ]);
 
         if ($validator->fails()) {
