@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ClienteFileDownloadController;
+use App\Http\Controllers\Clientes\ClienteFileDownloadController;
 use Illuminate\Support\Facades\Route;
 
 /*

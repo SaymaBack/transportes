@@ -61,14 +61,14 @@ class CatEmpleadosDocumentosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CatEmpleadosDocumentos $catEmpleadosDocumentos)
+    public function show(CatEmpleadosDocumentos $catEmpleadosDocumento)
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
 
-        if($catEmpleadosDocumentos){
+        if($catEmpleadosDocumento){
             $response['json']['success'] = true;
             $response['json']['message'] = "Registro obtenido correctamente";
-            $response['json']['data'] = $catEmpleadosDocumentos;
+            $response['json']['data'] = $catEmpleadosDocumento;
             $response['code'] = 200;
         }
 
@@ -80,12 +80,12 @@ class CatEmpleadosDocumentosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CatEmpleadosDocumentos $catEmpleadosDocumentos)
+    public function update(Request $request, CatEmpleadosDocumentos $catEmpleadosDocumento)
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
 
         $validator = Validator::make($request->all(), [
-            'nombre' => ['required', Rule::unique('cat_departamentos')->ignore($catEmpleadosDocumentos->id), 'string'],
+            'nombre' => ['required', Rule::unique('cat_departamentos')->ignore($catEmpleadosDocumento->id), 'string'],
             'aplica_puestos' => 'required|array|min:1',
             'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id',
             'active' => 'required|boolean'
@@ -94,7 +94,7 @@ class CatEmpleadosDocumentosController extends Controller
         if ($validator->fails()) {
             $response['json']['errors'] = $validator->errors()->toArray();
         } else{
-            $data = $catEmpleadosDocumentos->update($validator->validated());
+            $data = $catEmpleadosDocumento->update($validator->validated());
 
             if ($data) {
                 $response['json']['success'] = true;
@@ -110,11 +110,11 @@ class CatEmpleadosDocumentosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CatEmpleadosDocumentos $catEmpleadosDocumentos)
+    public function destroy(CatEmpleadosDocumentos $catEmpleadosDocumento)
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
 
-        $del = $catEmpleadosDocumentos->delete();
+        $del = $catEmpleadosDocumento->delete();
 
         if ($del) {
             $response['json']['success'] = true;
