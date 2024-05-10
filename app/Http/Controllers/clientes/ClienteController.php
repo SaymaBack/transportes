@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Clientes;
 
+use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use App\Models\TipoCliente;
 use Illuminate\Http\Request;

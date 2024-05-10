@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\ClienteDocumentoController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Clientes\ClienteController;
+use App\Http\Controllers\Clientes\ClienteDocumentoController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::apiResource('clientes', ClienteController::class);
 

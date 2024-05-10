@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Catalogos;
 
+use App\Http\Controllers\Controller;
 use App\Models\FormaPago;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class FormaPagoController extends Controller
 {

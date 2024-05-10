@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\CatDocumentoController;
-use App\Http\Controllers\FormaPagoController;
-use App\Http\Controllers\RegimenFiscalController;
-use App\Http\Controllers\UsoCFDIController;
+use App\Http\Controllers\Catalogos\CatDocumentoController;
+use App\Http\Controllers\Catalogos\FormaPagoController;
+use App\Http\Controllers\Catalogos\RegimenFiscalController;
+use App\Http\Controllers\Catalogos\UsoCFDIController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('formaspago', [FormaPagoController::class, 'index']);

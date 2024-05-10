@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Catalogos;
 
+use App\Http\Controllers\Controller;
 use App\Models\CatDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -138,7 +139,7 @@ class CatDocumentoController extends Controller
 
         if ($del) {
             $response['json']['success'] = true;
-            $response['json']['message'] = 'Documento del catalogo eliminado correctamente.';
+            $response['json']['message'] = 'Registro del catalogo eliminado correctamente.';
             $response['code'] = 200;
         }
 

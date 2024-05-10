@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Catalogos;
 
+use App\Http\Controllers\Controller;
 use App\Models\UsoCFDI;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UsoCFDIController extends Controller
 {
