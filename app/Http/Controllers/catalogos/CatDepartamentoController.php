@@ -82,7 +82,7 @@ class CatDepartamentoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => ['required', Rule::unique('cat_departamentos')->ignore($catDepartamento->id), 'string'],
-            'active' => 'required|boolean'
+            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {

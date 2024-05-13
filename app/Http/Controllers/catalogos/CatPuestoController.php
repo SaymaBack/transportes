@@ -82,7 +82,7 @@ class CatPuestoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => ['required', Rule::unique('cat_puestos')->ignore($catPuesto->id), 'string'],
-            'active' => 'required|boolean'
+            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {

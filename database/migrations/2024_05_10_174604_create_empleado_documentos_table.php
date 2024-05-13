@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->json('aplica_puestos');
             $table->boolean('activo')->default(true);
+            $table->timestamps();
         });
 
         Schema::create('empleado_documentos', function (Blueprint $table) {

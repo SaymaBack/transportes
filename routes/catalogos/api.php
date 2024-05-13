@@ -3,6 +3,7 @@
 use App\Http\Controllers\Catalogos\CatCentroCostoController;
 use App\Http\Controllers\Catalogos\CatDepartamentoController;
 use App\Http\Controllers\Catalogos\CatDocumentoController;
+use App\Http\Controllers\Catalogos\CatEmpleadosDocumentosController;
 use App\Http\Controllers\Catalogos\CatPuestoController;
 use App\Http\Controllers\Catalogos\CatTipoNominaController;
 use App\Http\Controllers\Catalogos\FormaPagoController;
@@ -20,4 +21,4 @@ Route::apiResource('catDepartamentos', CatDepartamentoController::class)->except
 Route::apiResource('catPuestos', CatPuestoController::class)->except('destroy');
 Route::apiResource('catTipoNominas', CatTipoNominaController::class)->except('destroy');
 Route::apiResource('catCentroCostos', CatCentroCostoController::class)->except('destroy');
-Route::apiResource('catEmpleadosDocumentos', CatDepartamentoController::class)->except('destroy');
+Route::apiResource('catEmpleadosDocumentos', CatEmpleadosDocumentosController::class)->except('destroy');

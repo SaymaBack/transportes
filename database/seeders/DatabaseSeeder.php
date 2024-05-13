@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         //\App\Models\User::factory(10)->create();
 
         \App\Models\User::create([
+            'id' => 1,
             'username' => 'test.user',
             'name' => 'Test User',
             'password' => bcrypt('123456.')
@@ -23,7 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TiposClientesSeeder::class,
             ClientesSeeder::class,
-            CatDocumentosSeeder::class
+            CatDocumentosSeeder::class,
+            CatCapitalHumanoSeeder::class
         ]);
 
 

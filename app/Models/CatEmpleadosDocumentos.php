@@ -18,6 +18,4 @@ class CatEmpleadosDocumentos extends Model
     protected $casts = [
         'aplica_puestos' => 'array'
     ];
-
-    public $timestamp = false;
 }

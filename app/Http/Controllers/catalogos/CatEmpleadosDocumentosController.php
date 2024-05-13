@@ -88,7 +88,7 @@ class CatEmpleadosDocumentosController extends Controller
             'nombre' => ['required', Rule::unique('cat_departamentos')->ignore($catEmpleadosDocumento->id), 'string'],
             'aplica_puestos' => 'required|array|min:1',
             'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id',
-            'active' => 'required|boolean'
+            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {

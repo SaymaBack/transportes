@@ -14,5 +14,5 @@ class CatTipoNomina extends Model
         'activo'
     ];
 
-    public $timestamp = false;
+    public $timestamps = false;
 }

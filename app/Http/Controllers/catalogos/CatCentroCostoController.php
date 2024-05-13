@@ -82,7 +82,7 @@ class CatCentroCostoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => ['required', Rule::unique('cat_centros_costo')->ignore($catCentroCosto->id), 'string'],
-            'active' => 'required|boolean'
+            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {

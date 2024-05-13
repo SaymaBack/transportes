@@ -14,5 +14,5 @@ class CatCentroCosto extends Model
         'activo'
     ];
 
-    public $timestamp = false;
+    public $timestamps = false;
 }
