@@ -11,11 +11,11 @@ class CatEmpleadosDocumentos extends Model
 
     protected $fillable = [
         'nombre',
-        'aplica_puestos',
+        /* 'aplica_puestos', */
         'activo'
     ];
 
-    protected $casts = [
+    /* protected $casts = [
         'aplica_puestos' => 'array'
-    ];
+    ]; */
 }

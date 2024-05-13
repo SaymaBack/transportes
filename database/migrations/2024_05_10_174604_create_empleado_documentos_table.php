@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('cat_empleados_documentos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->json('aplica_puestos');
+            /* $table->json('aplica_puestos'); */
             $table->boolean('activo')->default(true);
             $table->timestamps();
         });

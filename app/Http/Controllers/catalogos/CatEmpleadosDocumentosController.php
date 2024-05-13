@@ -38,8 +38,8 @@ class CatEmpleadosDocumentosController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|unique:cat_empleados_documentos|string',
-            'aplica_puestos' => 'required|array|min:1',
-            'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id'
+            /* 'aplica_puestos' => 'required|array|min:1',
+            'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id' */
         ]);
 
         if ($validator->fails()) {
@@ -86,8 +86,8 @@ class CatEmpleadosDocumentosController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => ['required', Rule::unique('cat_departamentos')->ignore($catEmpleadosDocumento->id), 'string'],
-            'aplica_puestos' => 'required|array|min:1',
-            'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id',
+            /* 'aplica_puestos' => 'required|array|min:1',
+            'aplica_puestos.*' => 'required|numeric|distinct|exists:cat_puestos,id', */
             'activo' => 'required|boolean'
         ]);
 

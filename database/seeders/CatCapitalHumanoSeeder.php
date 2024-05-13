@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CatCentroCosto;
 use App\Models\CatDepartamento;
+use App\Models\CatEmpleadosDocumentos;
 use App\Models\CatPuesto;
 use App\Models\CatTipoNomina;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -85,6 +86,26 @@ class CatCapitalHumanoSeeder extends Seeder
             ['id' => 40, 'nombre' => 'Supervisor de Mantenimento'],
             ['id' => 41, 'nombre' => 'Supervisor de Monitoreo'],
             ['id' => 42, 'nombre' => 'Talachero']
+        ], ['id'], ['nombre']);
+
+        CatEmpleadosDocumentos::upsert([
+            ['id' => 1, 'nombre' => 'Acta De Nacimiento'],
+            ['id' => 2, 'nombre' => 'Comprobante De Domicilio'],
+            ['id' => 3, 'nombre' => 'INE'],
+            ['id' => 4, 'nombre' => 'Constancia De Situacion Fiscal'],
+            ['id' => 5, 'nombre' => 'Constancia Del IMSS'],
+            ['id' => 6, 'nombre' => 'Aviso De Descuento Del IMSS'],
+            ['id' => 7, 'nombre' => 'Visa LASER'],
+            ['id' => 8, 'nombre' => 'Carta De Antecedentes No Penales'],
+            ['id' => 9, 'nombre' => 'Cartilla Militar'],
+            ['id' => 10, 'nombre' => 'Comprobante De Estudios'],
+            ['id' => 11, 'nombre' => 'CURP'],
+            ['id' => 12, 'nombre' => 'Licencia Federal'],
+            ['id' => 13, 'nombre' => 'Cartas De Recomendacion Laboral'],
+            ['id' => 14, 'nombre' => 'Constancia De Apto Medico'],
+            ['id' => 15, 'nombre' => 'Permiso FAST'],
+            ['id' => 16, 'nombre' => 'SENTRI'],
+            ['id' => 17, 'nombre' => 'Verificacion Lic']
         ], ['id'], ['nombre']);
     }
 }
