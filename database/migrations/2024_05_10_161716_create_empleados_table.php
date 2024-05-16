@@ -45,13 +45,13 @@ return new class extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('ape_mat');
             $table->string('ape_pat');
+            $table->string('ape_mat');
             $table->date('fecha_nac');
             $table->string('rfc');
             $table->string('curp');
             $table->string('imss');
-            $table->string('num_empleado');
+            $table->string('num_empleado')->nullable();
             $table->foreignId('departamento_id')->constrained('cat_departamentos');
             $table->foreignId('puesto_id')->constrained('cat_puestos');
             $table->foreignId('tipo_nomina_id')->constrained('cat_tipos_nomina');
@@ -62,7 +62,7 @@ return new class extends Migration
             $table->string('banco');
             $table->string('foto');
             $table->date('alta');
-            $table->boolean('estatus');
+            $table->boolean('activo');
             $table->softDeletes();
             $table->timestamps();
         });

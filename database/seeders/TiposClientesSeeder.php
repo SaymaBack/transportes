@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\TipoCliente;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TiposClientesSeeder extends Seeder
@@ -13,10 +12,9 @@ class TiposClientesSeeder extends Seeder
      */
     public function run(): void
     {
-        $tipos = [[1,'PERSONA FÍSICA'], [2,'NACIONAL'], [3,'AMERICANO']];
-
-        foreach ($tipos as $value) {
-            TipoCliente::create(['id' => $value[0], 'nombre' => $value[1]]);
-        }
+        TipoCliente::upsert(
+            [['id' => 1, 'nombre' => 'PERSONA FÍSICA'], ['id' => 2,'nombre' => 'NACIONAL'], ['id' => 3,'nombre' => 'AMERICANO']],
+            ['id'], ['nombre']
+        );
     }
 }

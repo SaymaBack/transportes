@@ -12,8 +12,8 @@ class Empleado extends Model
 
     protected $fillable = [
         'nombre',
-        'ape_mat',
         'ape_pat',
+        'ape_mat',
         'fecha_nac',
         'rfc',
         'curp',
@@ -29,8 +29,6 @@ class Empleado extends Model
         'banco',
         'foto',
         'alta',
-        'estatus'
+        'activo'
     ];
-
-
 }
