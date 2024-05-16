@@ -184,4 +184,19 @@ class EmpleadoController extends Controller
 
         return response()->json($response['json'], $response['code']);
     }
+
+    public function cambiaEstatusEmpleado(Empleado $empleado){
+        $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
+
+        $estatus = $empleado->estatus ? false : true;
+        $del = $empleado->update(['activo' => $estatus]);
+
+        if ($del) {
+            $response['json']['success'] = true;
+            $response['json']['message'] = 'Cambio el estatus correctamente';
+            $response['code'] = 200;
+        }
+
+        return response()->json($response['json'], $response['code']);
+    }
 }
