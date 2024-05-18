@@ -22,4 +22,8 @@ class ClienteDocumento extends Model
     public function cliente(){
         return $this->hasOne(Cliente::class);
     }
+
+    public function documento(){
+        return $this->hasOne(CatDocumento::class, 'id', 'documento_id');
+    }
 }

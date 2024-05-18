@@ -31,4 +31,8 @@ class Empleado extends Model
         'alta',
         'activo'
     ];
+
+    public function documentos(){
+        return $this->hasMany(EmpleadoDocumento::class);
+    }
 }

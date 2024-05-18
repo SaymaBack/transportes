@@ -26,13 +26,6 @@ class ClienteFileDownloadController extends Controller
             if (isset($request->documentos)) {
                 $documentos = $cliente->documentos->whereIn('id', json_decode($request->documentos));
             }
-            //dd();
-            /* dd(
-                [
-                    storage_path($zipname),
-                    $zip->open(storage_path($zipname), ZipArchive::CREATE | ZipArchive::OVERWRITE),
-                    [ZipArchive::CREATE, ZipArchive::OVERWRITE, ZipArchive::CHECKCONS, ZipArchive::ER_READ]
-                ]); */
             if (count($documentos) > 0) {
                 if ($zip->open(storage_path($zipname), ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
                     foreach ($documentos as $doc) {

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('empleado_id')->constrained('empleados');
             $table->foreignId('empleado_documento_id')->constrained('cat_empleados_documentos');
-            $table->string('path');
-            $table->date('expiracion');
+            $table->string('path')->nullable();
+            $table->date('expiracion')->nullable();
             $table->boolean('excluir');
             $table->softDeletes();
             $table->timestamps();
