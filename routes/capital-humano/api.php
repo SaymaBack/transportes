@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('empleados', EmpleadoController::class)->except('update');
 Route::post('empleados/{empleado}', [EmpleadoController::class, 'update'])->name('update');
 
-Route::apiResource('colaboradores/{empleado}/documentos', EmpleadoDocumentoController::class);
+Route::apiResource('colaboradores/{empleado}/documentos', EmpleadoDocumentoController::class)->except('update');

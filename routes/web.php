@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Clientes\ClienteFileDownloadController;
+use App\Http\Controllers\Files\FileDownloadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 }); */
 
-Route::get('/files/clientes/{cliente}/{documento?}', [ClienteFileDownloadController::class, 'descargarArchivos'])->name('files.download');
+Route::get('/files/clientes/{cliente}/{documento?}', [FileDownloadController::class, 'descargarArchivosClientes'])->name('files.download');
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Clientes;
+namespace App\Http\Controllers\Files;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use ZipArchive;
 use Illuminate\Support\Facades\Storage;
 
-class ClienteFileDownloadController extends Controller
+class FileDownloadController extends Controller
 {
-    public function descargarArchivos(Request $request, Cliente $cliente, ClienteDocumento $documento = null){
+    public function descargarArchivosClientes(Request $request, Cliente $cliente, ClienteDocumento $documento = null){
         if (!$request->hasValidSignature()) {
             abort(403);
         }
@@ -23,9 +23,15 @@ class ClienteFileDownloadController extends Controller
 
             $documentos = null;
 
+
+            /**
+             * Verifica si se envio en la solicitud la lista de documentos a descargar
+             */
+
             if (isset($request->documentos)) {
                 $documentos = $cliente->documentos->whereIn('id', json_decode($request->documentos));
             }
+
             if (count($documentos) > 0) {
                 if ($zip->open(storage_path($zipname), ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
                     foreach ($documentos as $doc) {
