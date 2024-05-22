@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Capitalhumano;
 
 use App\Http\Controllers\Controller;
+use App\Models\CatCentroCosto;
+use App\Models\CatDepartamento;
+use App\Models\CatPuesto;
+use App\Models\CatTipoNomina;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +28,20 @@ class EmpleadoController extends Controller
         if ($validator->fails()) {
             $response['json']['errors'] = $validator->errors()->toArray();
         } else{
-            $empleados = Empleado::all()->where('activo', $validator->validated()['activo']);
+            $operador = $validator->validated()['activo'] ? '=' : '<>';
+            $empleados = Empleado::select(
+                                'empleados.*',
+                                'cd.nombre as departamento',
+                                'cp.nombre as puesto',
+                                'cc.nombre as centro_costo',
+                                'cn.nombre as tipo_nomina'
+                            )
+                            ->where('empleados.baja', $operador, null)
+                            ->join('cat_departamentos as cd', 'empleados.departamento_id', '=', 'cd.id')
+                            ->join('cat_puestos as cp', 'empleados.puesto_id', '=', 'cp.id')
+                            ->join('cat_centros_costo as cc', 'empleados.centro_costo_id', '=', 'cc.id')
+                            ->join('cat_tipos_nomina as cn', 'empleados.tipo_nomina_id', '=', 'cn.id')
+                            ->get();
 
             $empleados->map(function($element){
                 $element->foto = asset(Storage::url($element->foto));
@@ -64,8 +81,7 @@ class EmpleadoController extends Controller
             'clabe' => 'required|string',
             'banco' => 'required|string',
             'foto' => 'required|file|extensions:jpg,png,jpeg',
-            'alta' => 'required|date',
-            'activo' => 'required|boolean'
+            'alta' => 'required|date'
         ]);
 
         if ($validator->fails()) {
@@ -136,8 +152,7 @@ class EmpleadoController extends Controller
             'clabe' => 'required|string',
             'banco' => 'required|string',
             'foto' => 'nullable|file|extensions:jpg,png,jpeg',
-            'alta' => 'required|date',
-            'activo' => 'required|boolean',
+            'alta' => 'required|date'
         ]);
 
         if ($validator->fails()) {
@@ -174,6 +189,7 @@ class EmpleadoController extends Controller
     {
         $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
 
+        $empleado->update(['baja' => now()]);
         $del = $empleado->delete();
 
         if ($del) {
@@ -185,15 +201,34 @@ class EmpleadoController extends Controller
         return response()->json($response['json'], $response['code']);
     }
 
-    public function cambiaEstatusEmpleado(Empleado $empleado){
-        $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
+    public function bajaEmpleado(Empleado $empleado){
+        $response = ['json' => ['success' => false, 'message'=> 'Error al cambiar estatus'], 'code' => 409];
 
-        $estatus = $empleado->estatus ? false : true;
-        $del = $empleado->update(['activo' => $estatus]);
+        $upd = $empleado->update(['baja' => now()]);
 
-        if ($del) {
+        if ($upd) {
             $response['json']['success'] = true;
-            $response['json']['message'] = 'Cambio el estatus correctamente';
+            $response['json']['message'] = 'Baja aplicada al empleado correctamente';
+            $response['code'] = 200;
+        }
+
+        return response()->json($response['json'], $response['code']);
+    }
+
+    public function catalogos(){
+        $response = ['json' => ['success' => false, 'message'=> 'Error al obtener catalogos'], 'code' => 409];
+
+        $catalogos = [];
+
+        $catalogos['centros_costo'] = CatCentroCosto::all()->where('activo', true);
+        $catalogos['departamentos'] = CatDepartamento::all()->where('activo', true);
+        $catalogos['puestos'] = CatPuesto::all()->where('activo', true);
+        $catalogos['tipos_nomina'] = CatTipoNomina::all()->where('activo', true);
+
+        if ($catalogos) {
+            $response['json']['success'] = true;
+            $response['json']['message'] = 'Catalogos obtenidos correctamente correctamente';
+            $response['json']['data'] = $catalogos;
             $response['code'] = 200;
         }
 

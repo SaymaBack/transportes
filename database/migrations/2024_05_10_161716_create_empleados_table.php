@@ -62,7 +62,7 @@ return new class extends Migration
             $table->string('banco');
             $table->string('foto');
             $table->date('alta');
-            $table->boolean('activo');
+            $table->datetime('baja')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

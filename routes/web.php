@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 /* Route::get('/', function () {
     return view('welcome');
 }); */
+Route::prefix('files')->group(function(){
+    Route::get('/clientes/{cliente}/{documento?}', [FileDownloadController::class, 'descargarArchivosClientes'])->name('files.download');
+    Route::get('/empleados/{empleado}/{documento?}', [FileDownloadController::class, 'descargarArchivosEmpleados'])->name('ch.files.download');
+});
 
-Route::get('/files/clientes/{cliente}/{documento?}', [FileDownloadController::class, 'descargarArchivosClientes'])->name('files.download');
 
