@@ -89,18 +89,21 @@ class EmpleadoController extends Controller
         } else{
             $validated = $validator->validated();
 
-            $file = $request->foto;
+            $file = $request->file('foto');
             $filename = Uuid::uuid1();
             $path = $file->storeAs('public/fotos', $filename . '.' . $file->extension());
-            $validated['foto'] = $path;
 
-            $empleado = Empleado::create($validated);
+            if ($path) {
+                $validated['foto'] = $path;
 
-            if ($empleado) {
-                $response['json']['success'] = true;
-                $response['json']['message'] = 'Registro de empleado almacenado correctamente';
-                $response['json']['data'] = $empleado;
-                $response['code'] = 200;
+                $empleado = Empleado::create($validated);
+
+                if ($empleado) {
+                    $response['json']['success'] = true;
+                    $response['json']['message'] = 'Registro de empleado almacenado correctamente';
+                    $response['json']['data'] = $empleado;
+                    $response['code'] = 200;
+                }
             }
         }
 
