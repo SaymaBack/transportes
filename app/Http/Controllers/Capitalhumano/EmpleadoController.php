@@ -8,6 +8,7 @@ use App\Models\CatDepartamento;
 use App\Models\CatPuesto;
 use App\Models\CatTipoNomina;
 use App\Models\Empleado;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -154,7 +155,7 @@ class EmpleadoController extends Controller
             'integrado' => 'required',
             'clabe' => 'required|string',
             'banco' => 'required|string',
-            'foto' => 'nullable|file|extensions:jpg,png,jpeg',
+            'foto' => ['nullable', File::types(['pdf', 'jpg', 'jpeg', 'png', 'xlsx', 'docx', 'pptx'])],
             'alta' => 'required|date'
         ]);
 

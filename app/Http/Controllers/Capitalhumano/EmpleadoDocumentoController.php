@@ -52,9 +52,12 @@ class EmpleadoDocumentoController extends Controller
                     }
                 }
 
+                $porcentaje_documentos = (count($documentos) * 100) / count($catEmpleadoDocumentos);
+
                 $response['json']['success'] = true;
                 $response['json']['message'] = 'Documentos obtenidos correctamente';
-                $response['json']['data'] = $catEmpleadoDocumentos;
+                $response['json']['data']['documentos'] = $catEmpleadoDocumentos;
+                $response['json']['data']['porcentaje_documentos'] = round($porcentaje_documentos, 2);
                 $response['code'] = 200;
             }
         }
@@ -67,17 +70,17 @@ class EmpleadoDocumentoController extends Controller
      */
     public function store(Empleado $empleado, Request $request)
     {
-        $response = ['json' => ['success' => false, 'message'=> 'Error'], 'code' => 409];
+        $response = ['json' => ['success' => false, 'message'=> 'Error, no se pudo cargar el documento, intenta más tarde.'], 'code' => 409];
 
         $validator = Validator::make($request->all(), [
             'excluir' => 'required|boolean',
             'empleado_documento_id' => 'required|exists:cat_empleados_documentos,id',
-            'documento' => [Rule::requiredIf(!$request->excluir), File::types(['pdf', 'jpg', 'jpeg', 'png', 'xlsx', 'docx', 'pptx']), 'nullable'],
+            'documento' => [Rule::requiredIf(!$request->excluir), File::types(['pdf', 'jpg', 'jpeg', 'gif', 'png', 'xml', 'xlsx', 'docx']), 'nullable'],
             'expiracion' => 'nullable|date'
         ]);
 
         if ($validator->fails()) {
-            $response['json']['errors'] = $validator->fails();
+            $response['json']['errors'] = $validator->errors()->toArray();
         } else{
             $validated = $validator->validated();
 
@@ -105,11 +108,7 @@ class EmpleadoDocumentoController extends Controller
 
             $documento = EmpleadoDocumento::updateOrCreate(
                 ['empleado_id' => $empleado->id, 'empleado_documento_id' => $validated['empleado_documento_id']],
-                [
-                    'excluir' => $validated['excluir'],
-                    'expiracion' => $validated['expiracion'],
-                    'path' => $validated['path']
-                ]
+                $validated
             );
 
             if ($documento) {
@@ -190,7 +189,7 @@ class EmpleadoDocumentoController extends Controller
             $response['json']['success'] = true;
             $response['json']['data']['url'] = URL::signedRoute(
                 'ch.files.download',
-                ['empleado' => $empleado->id, 'documento' => $documento->id],
+                ['empleado' => $empleado->id, 'empleadoDocumento' => $documento->id],
                 $expiration
             );
             $response['json']['message'] = 'Se generó correctamente la URL de documentación para este empleado';
@@ -204,7 +203,7 @@ class EmpleadoDocumentoController extends Controller
 
             $validator = Validator::make(['documentos' => $documentos], [
                 'documentos' => 'required|array|min:1',
-                'documentos.*' => 'required|numeric|exists:empleado_documentos,id'
+                'documentos.*' => 'required|exists:empleado_documentos,id'
             ]);
 
             if ($validator->fails()) {
@@ -213,7 +212,7 @@ class EmpleadoDocumentoController extends Controller
                 $response['json']['success'] = true;
                 $response['json']['data']['url'] = URL::signedRoute(
                     'ch.files.download',
-                    ['cliente' => $empleado->id, 'documento' => null, "documentos" => json_encode($validator->validated()['documentos'])],
+                    ['empleado' => $empleado->id, 'empleadoDocumento' => null, "documentos" => json_encode($validator->validated()['documentos'])],
                     $expiration
                 );
                 $response['json']['message'] = 'Se generó correctamente la URL de documentación para este empleado';

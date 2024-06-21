@@ -10,6 +10,8 @@ Route::prefix('empleados')->group(function(){
     Route::patch('/baja/{empleado}', [EmpleadoController::class, 'bajaEmpleado']);
 });
 
+Route::get('colaboradores/{empleado}/files/{documento?}', [EmpleadoDocumentoController::class, 'downloadDocs']);
+
 Route::get('catalogos', [EmpleadoController::class, 'catalogos']);
 
-Route::apiResource('colaboradores/{empleado}/documentos', EmpleadoDocumentoController::class)->except('update');
+Route::apiResource('colaboradores/{empleado}/documentos', EmpleadoDocumentoController::class)->except('update', 'show');
